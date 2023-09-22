@@ -2,6 +2,7 @@ import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider';
+import toast from 'react-hot-toast';
 // import toast from 'react-hot-toast';
 
 const Login = () => {
@@ -13,7 +14,7 @@ const Login = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    const from = location.state?.from?.pathname || '/';
+    const from = location.state?.from?.pathname || '/appointment';
 
     const handleLogIn = (data) => {
         console.log(data);
@@ -21,7 +22,7 @@ const Login = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user);
-                // toast.success('LogIn Successfull')
+                toast.success('LogIn Successfull')
                 // from.reset()
                 navigate(from, { replace: true })
 
@@ -60,7 +61,7 @@ const Login = () => {
                             <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                         </label>
                     </div>
-                    <input type="submit" className='btn btn-accent  w-full mt-4' value='Sign Up' />
+                    <input type="submit" className='btn btn-accent  w-full mt-4' value='Sign In' />
                     {logInError && <p className='text-red-500'>{logInError}</p>}
                     {logInError && <p className='text-red-500'>{logInError}</p>}
 

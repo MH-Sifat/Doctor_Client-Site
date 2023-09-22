@@ -23,7 +23,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/appointment',
-                element: <Appointment></Appointment>
+                element: <PrivateRoute><Appointment></Appointment></PrivateRoute>
             },
             {
                 path: '/login',
@@ -37,7 +37,7 @@ const router = createBrowserRouter([
     },
     {
         path: '/dashboard',
-        element: <PrivateRoute><DashBoard/></PrivateRoute>
+        element: <PrivateRoute><DashBoard /></PrivateRoute>
     }
 ])
 

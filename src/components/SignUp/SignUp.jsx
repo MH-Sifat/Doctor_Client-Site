@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider';
 import toast from 'react-hot-toast';
 
@@ -9,18 +9,26 @@ const SignUp = () => {
     const { createUser, updateUser } = useContext(AuthContext);
     const [signUpError, setSignUpError] = useState("");
 
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const from = location.state?.from?.pathname || '/';
+
+
     const handleSignUp = (data) => {
         createUser(data.email, data.password)
             .then(result => {
                 const user = result.user;
                 console.log(user);
                 toast.success('User Created Successfully')
+                navigate(from, { replace: true })
                 const userInfo = {
                     displayName: data.name
                 }
                 updateUser(userInfo)
                     .then(() => { })
                     .catch(err => console.log(err))
+
 
             })
             .catch(error => {
@@ -55,7 +63,12 @@ const SignUp = () => {
                         </label>
                         <input type="password" className="input input-bordered" {...register("password", {
                             required: "required",
-                            minLength: { value: 6, message: "Password must be 6 charecters long" }
+                            minLength: { value: 6, message: "Password must be 6 charecters long" },
+                            pattern: {
+                                value: /(?=.*[A-Z])(?=.*[@$!%*?&])(?=.*?[0-9])/,
+                                message: "password must have one Uppercase,Number and Special charecters(@$!%*?&)"
+
+                            }
                         })} />
                         {errors.password && <p className='text-red-500'>{errors.password?.message}</p>}
                         <label className="label">

@@ -2,17 +2,34 @@ import { format } from 'date-fns';
 import React, { useEffect, useState } from 'react';
 import AppointmentOption from './AppointmentOption';
 import BookingModal from '../BookingModal/BookingModal';
+import { useQuery } from 'react-query';
+import { data } from 'autoprefixer';
+import Loading from '../../Shared/Loading/Loading';
 
 const AvailableAppointment = ({ selectedDate }) => {
 
-    const [appointmentOption, setAppointmentOption] = useState([]);
+    // const [appointmentOption, setAppointmentOption] = useState([]);
+
     const [treatment, setTreatment] = useState(null);
 
-    useEffect(() => {
-        fetch('appointmentOption.json')
-            .then(res => res.json())
-            .then(data => setAppointmentOption(data))
-    }, [])
+    // useEffect(() => {
+    //     fetch('http://localhost:3000/appointmentoptions')
+    //         .then(res => res.json())
+    //         .then(data => setAppointmentOption(data))
+    // }, [])
+
+
+    const { data: appointmentOption = [], refetch, isLoading } = useQuery({
+        queryKey: ['appointmentoptions', data],
+        queryFn: async () => {
+            const res = await fetch('http://localhost:3000/appointmentoptions');
+            const data = await res.json();
+            return data;
+        }
+    })
+    if (isLoading) {
+        return <Loading></Loading>
+    }
     return (
         <>
             <div className='text-center my-16 mb-36'>
