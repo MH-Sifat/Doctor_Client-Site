@@ -7,7 +7,8 @@ import { data } from 'autoprefixer';
 import Loading from '../../Shared/Loading/Loading';
 
 const AvailableAppointment = ({ selectedDate }) => {
-
+    const date = format(selectedDate, 'PP');
+    console.log(date);
     // const [appointmentOption, setAppointmentOption] = useState([]);
 
     const [treatment, setTreatment] = useState(null);
@@ -20,11 +21,12 @@ const AvailableAppointment = ({ selectedDate }) => {
 
 
     const { data: appointmentOption = [], refetch, isLoading } = useQuery({
-        queryKey: ['appointmentoptions', data],
+        queryKey: ['appointmentoptions',data, date],
         queryFn: async () => {
-            const res = await fetch('http://localhost:3000/appointmentoptions');
+            const res = await fetch(`http://localhost:3000/appointmentoptions?date=${date}`);
             const data = await res.json();
             return data;
+
         }
     })
     if (isLoading) {
@@ -52,6 +54,7 @@ const AvailableAppointment = ({ selectedDate }) => {
                 treatment && <BookingModal
 
                     treatment={treatment}
+                    refetch={refetch}
                     setTreatment={setTreatment}
                     selectedDate={selectedDate}
                 ></BookingModal>

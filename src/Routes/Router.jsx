@@ -7,6 +7,9 @@ import Login from "../components/Login/Login";
 import SignUp from "../components/SignUp/SignUp";
 import DashBoard from "../components/DashBoard/DashBoard";
 import PrivateRoute from "./PrivateRoute/PrivateRoute";
+import DashBoardLayout from "../Layout/DashBoardLayout";
+import AllUsers from "../components/DashBoard/AllUsers/AllUsers";
+import MyAppointment from "../components/DashBoard/MyAppointment/MyAppointment";
 
 const router = createBrowserRouter([
     {
@@ -37,7 +40,17 @@ const router = createBrowserRouter([
     },
     {
         path: '/dashboard',
-        element: <PrivateRoute><DashBoard /></PrivateRoute>
+        element: <PrivateRoute><DashBoardLayout></DashBoardLayout></PrivateRoute>,
+        children: [
+            {
+                path: '/dashboard',
+                element: <MyAppointment></MyAppointment>
+            },
+        {
+            path:'/dashboard/allUsers',
+            element:<AllUsers></AllUsers>
+        }
+        ]
     }
 ])
 

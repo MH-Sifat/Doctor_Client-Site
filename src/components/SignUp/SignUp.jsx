@@ -9,24 +9,25 @@ const SignUp = () => {
     const { createUser, updateUser } = useContext(AuthContext);
     const [signUpError, setSignUpError] = useState("");
 
-    const location = useLocation();
+    // const location = useLocation();
     const navigate = useNavigate();
 
-    const from = location.state?.from?.pathname || '/';
+    // const from = location.state?.from?.pathname || '/';
 
 
     const handleSignUp = (data) => {
         createUser(data.email, data.password)
             .then(result => {
                 const user = result.user;
-                console.log(user);
                 toast.success('User Created Successfully')
-                navigate(from, { replace: true })
+                // navigate(from, { replace: true })
                 const userInfo = {
                     displayName: data.name
                 }
                 updateUser(userInfo)
-                    .then(() => { })
+                    .then(() => {
+                        savedUser(data.name, data.email)
+                    })
                     .catch(err => console.log(err))
 
 
@@ -37,6 +38,22 @@ const SignUp = () => {
             })
     }
 
+    const savedUser = (name, email) => {
+        const user = { name, email }
+        fetch('http://localhost:3000/users', {
+            method: "POST",
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                navigate('/')
+            })
+
+    }
     return (
         <div className='flex justify-center items-center h-[700px]'>
             <div className='w-96 p-6 shadow-lg rounded'>
