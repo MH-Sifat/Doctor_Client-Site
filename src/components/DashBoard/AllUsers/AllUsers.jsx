@@ -12,29 +12,29 @@ const AllUsers = () => {
             return data;
         }
     })
-    const handleMakeAdmin = id => {
-        fetch(`http://localhost:3000/users/admin/${id}`, {
+    const handleMakeAdmin = user => {
+        fetch(`http://localhost:3000/users/admin/${user?._id}`, {
             method: "PUT",
         })
             .then(res => res.json())
             .then(data => {
                 if (data.modifiedCount > 0) {
-                    toast.success('Make Admin Succesfull')
+                    toast.success(`${user.name} is Admin Succesfull`)
                     refetch();
                 }
             })
     }
 
-    const handleDeleteUser = id => {
+    const handleDeleteUser = user => {
         const process = window.confirm('Do you want to delete this User?')
         if (process) {
-            fetch(`http://localhost:3000/users/admin/${id}`, {
+            fetch(`http://localhost:3000/users/admin/${user?._id}`, {
                 method: "DELETE",
             })
                 .then(res => res.json())
                 .then(data => {
                     if (data.deletedCount > 0) {
-                        toast.success('User Deleted')
+                        toast.success(`${user.name} Deleted`)
                         refetch()
                     }
                 })
@@ -43,7 +43,7 @@ const AllUsers = () => {
     }
     return (
         <div>
-            <h1 className='text-3xl mb-5'> See All Users</h1>
+            <h1 className='text-2xl mb-5'> See All Users: {users.length}</h1>
             <div className="overflow-x-auto">
                 <table className="table">
                     {/* head */}
@@ -62,8 +62,8 @@ const AllUsers = () => {
                                 <th>{i + 1}</th>
                                 <td>{user?.name}</td>
                                 <td>{user?.email}</td>
-                                <td>{user?.role !== 'admin' ? <button onClick={() => { handleMakeAdmin(user._id) }} className="btn btn-sm btn-active btn-neutral">Admin</button> : 'admin'}</td>
-                                <td><button onClick={() => { handleDeleteUser(user._id) }} className="btn btn-sm btn-active btn-neutral">Remove User</button> </td>
+                                <td>{user?.role !== 'admin' ? <button onClick={() => { handleMakeAdmin(user) }} className="btn btn-sm btn-active btn-neutral">Admin</button> : 'admin'}</td>
+                                <td><button onClick={() => { handleDeleteUser(user) }} className="btn btn-sm btn-active btn-neutral">Remove User</button> </td>
 
 
                             </tr>)
