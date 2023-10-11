@@ -8,14 +8,14 @@ const ManageDoctors = () => {
     const { data: doctors = [], isLoading, refetch } = useQuery({
         queryKey: ['doctors'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:3000/doctors')
+            const res = await fetch('https://final-project-server-xi.vercel.app/doctors')
             const data = await res.json();
             return data;
         }
     })
 
     const deleteDoctor = (doctor) => {
-        fetch(`http://localhost:3000/doctors/${doctor._id}`, {
+        fetch(`https://final-project-server-xi.vercel.app/doctors/${doctor._id}`, {
             method: 'DELETE',
         })
             .then(res => res.json())
@@ -23,7 +23,6 @@ const ManageDoctors = () => {
                 if (data.deletedCount > 0) {
                     toast.success(`Doctor ${doctor.name} is deleted successfully`)
                     refetch()
-
                 }
             })
 
@@ -53,15 +52,24 @@ const ManageDoctors = () => {
                         {
                             doctors.map((doctor, i) => <tr key={doctor._id}>
                                 <th>{i + 1}</th>
-                                <td><div className="btn btn-ghost btn-circle avatar">
-                                    <div className="w-10 rounded-full">
-                                        <img src={doctor?.image} />
+                                <td>
+                                    {/* <div className="btn btn-ghost btn-circle avatar">
+                                        <div className="w-10 rounded-full">
+                                            <img src={doctor?.image} />
+                                        </div>
+                                    </div> */}
+
+                                    <div className="btn btn-ghost btn-circle avatar">
+                                        <div className="w-10 rounded-full">
+                                            <img src={`data:image/png;base64,${doctor?.image}`} />
+                                        </div>
                                     </div>
-                                </div></td>
+
+                                </td>
                                 <td>{doctor?.name}</td>
                                 <td>{doctor?.email}</td>
                                 <td>{doctor?.specialty}</td>
-                                <td><button onClick={() => { deleteDoctor(doctor) }} className="btn btn-sm btn-active btn-error">Delete</button> </td>
+                                <td><button onClick={() => { deleteDoctor(doctor) }} className="btn btn-sm btn-active btn-error text-white">Delete</button> </td>
 
 
                             </tr>)

@@ -6,6 +6,7 @@ import DentalCare from './DentalCare/DentalCare';
 import MakeAppointment from './MakeAppointment/MakeAppointment';
 import Testmonial from './Testmonial/Testmonial';
 import StayConnect from './StayConnect/StayConnect';
+import Doctors from './Doctors/Doctors';
 
 const Home = () => {
     return (
@@ -14,6 +15,7 @@ const Home = () => {
             <InfoCards></InfoCards>
             <Services></Services>
             <DentalCare></DentalCare>
+            <Doctors></Doctors>
             <MakeAppointment></MakeAppointment>
             <Testmonial></Testmonial>
             <StayConnect></StayConnect>

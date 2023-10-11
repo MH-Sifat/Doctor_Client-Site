@@ -11,7 +11,7 @@ const AddDoctor = () => {
     const navigate = useNavigate();
 
     // const from = location.state?.from?.pathname || '/';
-    
+
 
     //In this we are hosting image in imagebb 
     const imageHostKey = import.meta.env.VITE_imagebb_key;
@@ -20,7 +20,7 @@ const AddDoctor = () => {
     const { data: specialties, isLoading } = useQuery({
         queryKey: ['specialty'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:3000/appointmentSpecialty')
+            const res = await fetch('https://final-project-server-xi.vercel.app/appointmentSpecialty')
             const data = res.json();
             return data;
             // console.log(data);
@@ -48,7 +48,7 @@ const AddDoctor = () => {
                     }
                     console.log(doctor.specialty);
                     console.log(doctor);
-                    fetch('http://localhost:3000/doctors', {
+                    fetch('https://final-project-server-xi.vercel.app/doctors', {
                         method: 'POST',
                         headers: {
                             'content-type': 'application/json'

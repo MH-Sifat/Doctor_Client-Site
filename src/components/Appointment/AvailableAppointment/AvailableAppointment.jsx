@@ -14,16 +14,16 @@ const AvailableAppointment = ({ selectedDate }) => {
     const [treatment, setTreatment] = useState(null);
 
     // useEffect(() => {
-    //     fetch('http://localhost:3000/appointmentoptions')
+    //     fetch('https://final-project-server-xi.vercel.app/appointmentoptions')
     //         .then(res => res.json())
     //         .then(data => setAppointmentOption(data))
     // }, [])
 
 
     const { data: appointmentOption = [], refetch, isLoading } = useQuery({
-        queryKey: ['appointmentoptions',data, date],
+        queryKey: ['appointmentoptions', data, date],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:3000/appointmentoptions?date=${date}`);
+            const res = await fetch(`https://final-project-server-xi.vercel.app/appointmentoptions?date=${date}`);
             const data = await res.json();
             return data;
 

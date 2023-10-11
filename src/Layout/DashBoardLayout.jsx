@@ -25,7 +25,10 @@ const DashBoardLayout = () => {
                         {
                             isAdmin && <>
                                 <li><Link to='/dashboard/allUsers'>All Users</Link></li>
-                                <li><Link to='/dashboard/addDoctor'>Add Doctor</Link></li>
+
+                            {/* In this add doctor we use imagebb to host our image and send imagebb image link to backend 
+                                 <li><Link to='/dashboard/addDoctor'>Add Doctor</Link></li>  */}
+                                 
                                 <li><Link to='/dashboard/addNewDoctor'>Add New Doctor</Link></li>
                                 <li><Link to='/dashboard/manageDoctors'>Manage Doctors</Link></li>
                             </>

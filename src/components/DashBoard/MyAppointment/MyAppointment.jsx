@@ -6,7 +6,7 @@ const MyAppointment = () => {
 
     const { user } = useContext(AuthContext);
 
-    const url = `http://localhost:3000/bookings?email=${user?.email}`
+    const url = `https://final-project-server-xi.vercel.app/bookings?email=${user?.email}`
     const { data: bookings = [] } = useQuery({
         queryKey: ['bookings', user?.email],
         queryFn: async () => {
@@ -40,7 +40,7 @@ const MyAppointment = () => {
                                 <td>{booking?.treatment}</td>
                                 <td>{booking?.appointmentDate}</td>
                                 <td>{booking?.slot}</td>
-                                
+
                             </tr>)
                         }
 

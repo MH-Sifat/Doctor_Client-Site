@@ -7,13 +7,13 @@ const AllUsers = () => {
     const { data: users = [], refetch } = useQuery({
         queryKey: ['users'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:3000/users')
+            const res = await fetch('https://final-project-server-xi.vercel.app/users')
             const data = await res.json();
             return data;
         }
     })
     const handleMakeAdmin = user => {
-        fetch(`http://localhost:3000/users/admin/${user?._id}`, {
+        fetch(`https://final-project-server-xi.vercel.app/users/admin/${user?._id}`, {
             method: "PUT",
         })
             .then(res => res.json())
@@ -28,7 +28,7 @@ const AllUsers = () => {
     const handleDeleteUser = user => {
         const process = window.confirm('Do you want to delete this User?')
         if (process) {
-            fetch(`http://localhost:3000/users/admin/${user?._id}`, {
+            fetch(`https://final-project-server-xi.vercel.app/users/admin/${user?._id}`, {
                 method: "DELETE",
             })
                 .then(res => res.json())

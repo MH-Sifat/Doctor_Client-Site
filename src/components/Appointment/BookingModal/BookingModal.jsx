@@ -3,9 +3,9 @@ import React, { useContext } from 'react';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../../../context/AuthProvider';
 
-const BookingModal = ({ setTreatment, treatment, selectedDate,refetch }) => {
+const BookingModal = ({ setTreatment, treatment, selectedDate, refetch }) => {
     const { name, slots } = treatment;
-const {user}=useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     const date = format(selectedDate, "PP");
 
     const handleBooking = (event) => {
@@ -27,27 +27,27 @@ const {user}=useContext(AuthContext);
         }
         console.log(booking);
         // In Future : Send Data in Server and After save data close the modal and seen display success toast / alert 
-        fetch('http://localhost:3000/booking', {
+        fetch('https://final-project-server-xi.vercel.app/booking', {
             method: "POST",
             headers: {
-              "content-type": "application/json",
+                "content-type": "application/json",
             },
             body: JSON.stringify(booking)
-          })
+        })
             .then(res => res.json())
             .then(data => {
-              console.log(data);
-              if (data.acknowledged) {
-                setTreatment(null)
-                toast.success('Booking confirmed')
-                refetch()
-              }
-              else{
-                toast.error(data.message)
-              }
-              
+                console.log(data);
+                if (data.acknowledged) {
+                    setTreatment(null)
+                    toast.success('Booking confirmed')
+                    refetch()
+                }
+                else {
+                    toast.error(data.message)
+                }
+
             })
-        
+
     }
 
     return (

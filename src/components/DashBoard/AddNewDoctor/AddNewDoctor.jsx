@@ -1,11 +1,28 @@
 import React, { useState } from 'react';
+import { useQuery } from 'react-query';
+import { useNavigate } from 'react-router-dom';
 
 const AddNewDoctor = () => {
+    const navigate = useNavigate();
+
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [specialty, setSpecialty] = useState('');
     const [image, setImage] = useState(null);
 
     const [success, setSuccess] = useState(false);
+
+
+    const { data: specialties } = useQuery({
+        queryKey: ['specialty'],
+        queryFn: async () => {
+            const res = await fetch('https://final-project-server-xi.vercel.app/appointmentSpecialty')
+            const data = res.json();
+            return data;
+            // console.log(data);
+
+        }
+    })
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -16,15 +33,17 @@ const AddNewDoctor = () => {
         formData.append('name', name);
         formData.append('email', email);
         formData.append('image', image);
+        formData.append('specialty', specialty);
 
-        fetch('http://localhost:3000/doctors', {
+        fetch('https://final-project-server-xi.vercel.app/doctors', {
             method: 'POST',
             body: formData
         })
             .then(res => res.json())
             .then(data => {
                 if (data.insertedId) {
-                    setSuccess('Doctor Added Successfully')
+                    setSuccess('Doctor Added Successfully');
+                    navigate('/dashboard/manageDoctors')
                 }
             })
             .catch(error => {
@@ -54,12 +73,28 @@ const AddNewDoctor = () => {
                         </div>
                         <div className="form-control w-full max-w-xs mt-3">
                             <label className="label">
+                                <span className="label-text">specialty</span>
+                            </label>
+                            <select onChange={e => setSpecialty(e.target.value)} className="select select-bordered w-full">
+                                {
+                                    specialties?.map(specialty => <option
+                                        key={specialty._id}
+                                        value={specialty.name}
+                                    >{specialty.name}</option>)
+                                }
+                            </select>
+
+                        </div>
+                        <div className="form-control w-full max-w-xs mt-3">
+                            <label className="label">
                                 <span className="label-text">Photo</span>
                             </label>
                             <input onChange={e => setImage(e.target.files[0])} type="file" className="file-input file-input-bordered w-full max-w-xs" />
                         </div>
                         <input type="submit" className='mt-6  btn btn-accent  w-full mt-4' value='Add' />
-
+                        {
+                            success && <p className='text-green-500'>{success}</p>
+                        }
                     </form>
 
                 </div>
