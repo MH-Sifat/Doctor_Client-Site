@@ -2,13 +2,14 @@ import React from 'react';
 
 const AppointmentOption = ({ appointmentOption, setTreatment }) => {
 
-    const { _id, name, slots } = appointmentOption;
+    const { _id, name, slots,price } = appointmentOption;
 
     return (
         <div className="card  p-6 text-center shadow-xl">
             <div className="card-body text-center">
                 <h2 className="text-2xl font-semibold text-center text-secondary">{name}</h2>
                 <p>{slots.length > 0 ? slots[0] : 'Try Another Day'}</p>
+                <p><small>price : {price}</small></p>
                 <p className='text-zinc-400'>{slots.length} {slots.length > 1 ? "Spaces" : "Space"} Available</p>
 
                 <label

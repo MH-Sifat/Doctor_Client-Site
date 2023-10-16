@@ -14,6 +14,7 @@ import AdminRoute from "./AdminRoute/AdminRoute";
 import AddDoctor from "../components/DashBoard/AddDoctor/AddDoctor";
 import ManageDoctors from "../components/DashBoard/ManageDoctors/ManageDoctors";
 import AddNewDoctor from "../components/DashBoard/AddNewDoctor/AddNewDoctor";
+import Payment from "../components/DashBoard/Payment/Payment";
 
 const router = createBrowserRouter([
     {
@@ -65,6 +66,11 @@ const router = createBrowserRouter([
             {
                 path: '/dashboard/ManageDoctors',
                 element: <AdminRoute><ManageDoctors></ManageDoctors></AdminRoute>
+            },
+            {
+                path: '/dashboard/payment/:id',
+                loader: ({ params }) => fetch(`https://final-project-server-xi.vercel.app/bookings/${params.id}`),
+                element: <Payment></Payment>
             }
         ]
     }

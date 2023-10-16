@@ -34,6 +34,9 @@ const Login = () => {
             })
     }
 
+
+    // admin@gmail.com  12345A$
+
     return (
         <div className='flex justify-center items-center h-[700px]'>
             <div className='w-96 p-6 shadow-lg rounded'>
